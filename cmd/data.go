@@ -562,10 +562,8 @@ func (env envInfo) getSecret() (*internal.Secret, error) {
 				return nil, errors.Wrap(err, "getSecret - GetSecretKey")
 			}
 			return &secret, nil
-
-		} else {
-			return nil, errors.Wrap(err, " :getSecret - store.GetValue")
 		}
+		return nil, errors.Wrap(err, " :getSecret - store.GetValue")
 	}
 
 	// unmarshal secret and return secret map
