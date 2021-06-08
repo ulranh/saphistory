@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package private;
+option go_package = ".;internal";
+
+message Secret {
+  map<string,bytes> Name = 1;
+}
+
+message D1StringList {
+  repeated string Data1 = 1;
+}
+
+message D2StringList {
+  repeated D1StringList Data2 = 1;
+}
+
+message D3StringList {
+  repeated D2StringList Data3 = 1;
+}
+
+message TransactionData {
+  string       Ts = 1;
+  D1StringList Tcodes = 4;
+  D2StringList Hdata = 5;
+  D3StringList Tdata = 6;
+}
+
+message SapSelection {
+  string Sid = 2;
+  string Ts = 3;
+  int32  Direction = 4;
+}
+
+message SystemInfo {
+  string  Sid = 1;
+  string  Client = 2;
+  string  Description = 3;
+  string  Sysnr = 4;
+  string  Hostname = 5;
+  string  Username = 6;
+  string  Password = 7;
+
+}
+
+message SystemList {
+  repeated SystemInfo Systems = 1;
+}
+
+message Nothing {}
+
+service SapHistoryService {
+  // Get all Customers with filter - A server-to-client streaming RPC.
+  rpc GetSapStatus(SapSelection) returns (TransactionData);
+  rpc GetSystemList(Nothing) returns (SystemList);
+  rpc UpdateSystem(SystemInfo) returns (Nothing);
+  rpc DeleteSystem(SystemInfo) returns (Nothing);
+}
