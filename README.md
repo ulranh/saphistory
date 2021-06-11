@@ -39,7 +39,7 @@ After each scrape, the data is serialized using the [protocol buffers](https://g
 # Installation
 ## Binary
 To build the app you need the [Go](https://golang) programming language, the [make](https://www.gnu.org/software/make/) tool and [npm](https://www.npmjs.com/) for the client.
-## Without Tls
+### Without Tls
 ```
 $ export VUE_APP_PORT=8080
 
@@ -54,7 +54,7 @@ where the user needs write rights for the database directory. Afterwards the app
 ```
 http://localhost:8080
 ```
-## With Tls
+### With Tls
 For tls you also need a tls directory with the files tls.crt and tls.key. To test it with localhost, you can make the certificates for example with [mkcert](https://github.com/FiloSottile/mkcert).
 
 ```
@@ -68,7 +68,7 @@ $ ./saphistory -dbstore </path/to/database directory>
 https://localhost:8443
 ```
 ## Docker
-## Without Tls
+### Without Tls
 The nwrfcsdk directory has to be copied into the app directory.
 
 ```
@@ -81,7 +81,7 @@ $ make docker-run
 
 http://<hostname>:8080
 ```
-## With Tls
+### With Tls
 The nwrfcsdk directory and the tls directory with the certificates have to be copied into the app directory.
 
 ```
