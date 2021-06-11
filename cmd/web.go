@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/DataDog/zstd"
+	badger "github.com/dgraph-io/badger/v3"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 
 	log "github.com/sirupsen/logrus"
@@ -209,6 +210,11 @@ func (env *envInfo) GetSapStatus(ctx context.Context, selValues *internal.SapSel
 
 	// find matching key for the timestamp
 	k, err := store.FindMatchingKey(selValues.Ts, selValues.Direction)
+	if err == badger.ErrKeyNotFound {
+		if 0 == selValues.Direction {
+			k, err = store.FindMatchingKey(selValues.Ts, 1)
+		}
+	}
 	if err != nil {
 		return nil, errors.Wrap(err, " :GetSapStatus - FindMatchingKey")
 	}
@@ -321,6 +327,9 @@ func (env *envInfo) getHeadlines(ts string) (*internal.D2StringList, error) {
 	// find matching key for the timestamp
 	// k, err := store.FindMatchingKey(env.ts.Format("200601021504"), 0)
 	k, err := store.FindMatchingKey(ts, 0)
+	if err == badger.ErrKeyNotFound {
+		k, err = store.FindMatchingKey(ts, 1)
+	}
 	if err != nil {
 		return nil, errors.Wrap(err, " :getHeadline - FindMatchingKey")
 	}
@@ -349,6 +358,9 @@ func (env *envInfo) getTcodes(ts string) (*internal.D1StringList, error) {
 	// find matching key for the timestamp
 	// k, err := store.FindMatchingKey(env.ts.Format("200601021504"), 0)
 	k, err := store.FindMatchingKey(ts, 0)
+	if err == badger.ErrKeyNotFound {
+		k, err = store.FindMatchingKey(ts, 1)
+	}
 	if err != nil {
 		return nil, errors.Wrap(err, " :getTcodes - FindMatchingKey")
 	}

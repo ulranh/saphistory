@@ -188,10 +188,6 @@ func (s *Badger) FindMatchingKey(ts string, direction int32) ([]byte, error) {
 		it.Seek([]byte(ts))
 		if direction != 0 {
 			it.Next()
-		} else {
-			if !it.Valid() {
-				it.Rewind()
-			}
 		}
 		if !it.Valid() {
 			return badger.ErrKeyNotFound
