@@ -106,4 +106,4 @@ The image below shows the table of the SAP lock entries at a given time:
 # ToDo
 * Writing tests
 * Possibility to delete old database content
-* adapt transaction data
+* Adapt transaction data
